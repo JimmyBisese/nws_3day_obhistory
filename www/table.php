@@ -61,20 +61,20 @@
 	</div>
 
 	<div id="ChartLink" >
-		<H1 style="display: inline; text-align:left"><?php echo $station_name; ?></H1>
-		<a style="float:right" href="http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name; ?>?station=<?php echo($station); ?>">
-			Chart for <?php echo $station_name; ?></a>
+		<H1 style="display: inline; text-align:left"><?php echo $site_name; ?></H1>
+		<a style="float:right" href="http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name; ?>?site_code=<?php echo($site_code); ?>">
+			Chart for <?php echo $site_name; ?></a>
 	</div>
 	<div class="make_radius_border">
 		<div class="select_form" >
 			<form class="lfloat" action="http://<?php echo $_SERVER['SERVER_NAME'] . $script_name; ?>">
 				<?php echo $select_label; ?></br>
-				<select name="station" onchange="this.form.submit()" >
+				<select name="site_code" onchange="this.form.submit()" >
 				<?php 
 					while ($row = $station_list_result->fetch_assoc())
 					{
-						$selected = (isset($station) && $station ==  $row['station_code']) ? 'selected' : '';
-						echo "<option value='" . $row['station_code'] . "' $selected >" . $row['station_name'] . "</option>";
+						$selected = (isset($site_code) && $site_code ==  $row['site_code']) ? 'selected' : '';
+						echo "<option value='" . $row['site_code'] . "' $selected >" . $row['site_name'] . "</option>";
 					}
 				?>
 				</select>

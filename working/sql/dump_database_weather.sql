@@ -17,12 +17,12 @@ USE `weather`;
 
 -- Dumping structure for table weather.stations
 CREATE TABLE IF NOT EXISTS `stations` (
-  `station_code` varchar(12) NOT NULL,
-  `station_name` varchar(128) NOT NULL,
+  `site_code` varchar(12) NOT NULL,
+  `site_name` varchar(128) NOT NULL,
   `short_name` varchar(128) DEFAULT NULL,
   `LastRetrieval` datetime DEFAULT NULL,
   `LastModified` datetime DEFAULT NULL,
-  PRIMARY KEY (`station_code`)
+  PRIMARY KEY (`site_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `stations` (
 -- Dumping structure for table weather.weather_data
 CREATE TABLE IF NOT EXISTS `weather_data` (
   `TIMESTAMP` varchar(255) NOT NULL,
-  `STATION` varchar(12) NOT NULL,
+  `site_code` varchar(12) NOT NULL,
   `DateTime` datetime DEFAULT NULL,
   `Date` int(11) DEFAULT NULL,
   `Time` varchar(255) DEFAULT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `weather_data` (
   `Precip3h` varchar(255) DEFAULT NULL,
   `Precip6hr` varchar(255) DEFAULT NULL,
   `update_count` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`TIMESTAMP`,`STATION`)
+  PRIMARY KEY (`TIMESTAMP`,`site_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.

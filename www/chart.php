@@ -288,7 +288,7 @@
 			    ?>
 				</select>
 				<input style="border-left: 20px;" type="button" 
-					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?station=<?php echo($site_code); ?>', '_table_target');" 
+					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?site_code=<?php echo($site_code); ?>', '_table_target');" 
 					value="View Table" />
 			</form>
 		
@@ -304,7 +304,7 @@
 			    ?>
 				</select>
 				<input style="border-left: 20px;" type="button" 
-					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?station=<?php echo($site_codeB); ?>', '_table_target');" 
+					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?site_code=<?php echo($site_codeB); ?>', '_table_target');" 
 					value="View Table" />
 			</form>
 		</div>	

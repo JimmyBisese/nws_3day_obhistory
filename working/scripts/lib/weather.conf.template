@@ -18,7 +18,7 @@ STATION_TABLE_NAME: stations
 TABLE_NAME: weather_data
 
 [DEFAULTS]
-out_file_columns: TIMESTAMP,STATION,DateTime,Date,Time,Wind,Visibility,Weather,SkyCondition,AirTemp,Dewpoint,Air6HourMax,Air6HourMin,RelativeHumidity,WindChill,HeatIndex,AirPressureAltimeter,AirPressureSeaLevel,Precip1h,Precip3h,Precip6hr
+out_file_columns: TIMESTAMP,site_code,DateTime,Date,Time,Wind,Visibility,Weather,SkyCondition,AirTemp,Dewpoint,Air6HourMax,Air6HourMin,RelativeHumidity,WindChill,HeatIndex,AirPressureAltimeter,AirPressureSeaLevel,Precip1h,Precip3h,Precip6hr
 
 log_file_default_level: DEBUG
 

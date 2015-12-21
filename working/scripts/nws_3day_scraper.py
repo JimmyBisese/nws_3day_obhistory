@@ -59,36 +59,36 @@ def main():
 							db=config.get('DATABASE', 'DB'),
 							port=int(config.get('DATABASE', 'PORT')))
 	
-	query = 'SELECT station_code,station_name,LastRetrieval,LastModified from  ' + config.get('DATABASE', 'STATION_TABLE_NAME')
+	query = 'SELECT site_code,site_name,LastRetrieval,LastModified from  ' + config.get('DATABASE', 'STATION_TABLE_NAME')
 	
 	try:
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
 		cursor.execute(query)
 		station_list = cursor.fetchall()
 		for row in station_list:
-			stations_data[row['station_code']] = row
+			stations_data[row['site_code']] = row
 	except:
 	   logger.info('failed during getting station_list\n' + query)
 	   raise
 
-	station_codes = []
+	site_codes = []
 	if args.station:
-		station_codes.append(args.station)
+		site_codes.append(args.station)
 	else: 
-		station_codes = sorted(stations_data.keys())
+		site_codes = sorted(stations_data.keys())
 
 	startTime = datetime.now()
 
 	logger.info('%s Processing starts at %s %s' % ( '#' * 25, (str(startTime))[:-3], '#' * 25 ))
 
-	for station_code in station_codes:
-		logger.info('%s Retrieving data for %-45s %s' % ( '#' * 16, stations_data[station_code]['station_name'], '#' * 16))
+	for site_code in site_codes:
+		logger.info('%s Retrieving data for %-45s %s' % ( '#' * 16, stations_data[site_code]['site_name'], '#' * 16))
 	
 		"""
 			this is where the retrieval occurs.  the web page is down loaded and parsed into data_rows
 		"""
-		[LastRetrieval, LastModified, data_rows] = get_data(station_code)
-		logger.debug("stored LastRetrieval==%s" % (stations_data[station_code]['LastRetrieval']))
+		[LastRetrieval, LastModified, data_rows] = get_data(site_code)
+		logger.debug("stored LastRetrieval==%s" % (stations_data[site_code]['LastRetrieval']))
 		logger.debug("new    LastRetrieval==%s" % (LastRetrieval))
 		logger.info('web table contains %d rows' % (len(data_rows) ))
 		
@@ -96,7 +96,7 @@ def main():
 			"""
 				this is where the data is stored
 			"""
-			[pre_insert_row_count, post_insert_row_count] = store_data(conn, station_code, data_rows, LastRetrieval, LastModified)
+			[pre_insert_row_count, post_insert_row_count] = store_data(conn, site_code, data_rows, LastRetrieval, LastModified)
 	
 		if pre_insert_row_count <= 0:
 			logger.warn('failed to store data')
@@ -110,9 +110,9 @@ def main():
 	
 	return 0
 
-def get_data(station_code):
+def get_data(site_code):
 
-	url = config.get('DEFAULTS', 'weather_data_url_prefix') + '/' + station_code.upper() + config.get('DEFAULTS', 'weather_data_url_file_extension')
+	url = config.get('DEFAULTS', 'weather_data_url_prefix') + '/' + site_code.upper() + config.get('DEFAULTS', 'weather_data_url_file_extension')
 	
 	logger.debug('retrieval url: %s' % (url))
 	
@@ -192,7 +192,7 @@ def get_data(station_code):
 		
 		obs_datetime = datetime(year, my_month, int(day), int(hour), int(minute))
 		
-		data['STATION']   = station_code.upper()
+		data['site_code']   = site_code.upper()
 		data['DateTime']  = obs_datetime.strftime('%Y-%m-%d %H:%M:00')
 		data['TIMESTAMP'] = 'TS:' + data['DateTime']
 		
@@ -201,12 +201,14 @@ def get_data(station_code):
 		for field in check_field_values:
 			if data[field] == 'NA':
 				data[field] = None
+			elif not data[field]:
+				data[field] = -99
 
 		data_rows[data['TIMESTAMP']] = data
 
 	return [LastRetrieval, LastModified, data_rows]
 
-def store_data(conn, station_code, data, LastRetrieval, LastModified):
+def store_data(conn, site_code, data, LastRetrieval, LastModified):
 	
 	if len(data) <= 0:
 		return [-1,-1];
@@ -214,8 +216,8 @@ def store_data(conn, station_code, data, LastRetrieval, LastModified):
 	cursor = conn.cursor()
 	
 	# get the count of existing rows for this station
-	count_query = "SELECT count(STATION) from " + config.get('DATABASE', 'TABLE_NAME') + " where STATION like %s"
-	cursor.execute(count_query, [station_code])
+	count_query = "SELECT count(site_code) from " + config.get('DATABASE', 'TABLE_NAME') + " where site_code like %s"
+	cursor.execute(count_query, [site_code])
 	row = cursor.fetchone()
 	pre_insert_row_count = row[0]
 	
@@ -232,19 +234,19 @@ def store_data(conn, station_code, data, LastRetrieval, LastModified):
 		conn.commit()
 
 	except:
-	   logger.info('failed during %s insert for station %s\n%s' % (config.get('DATABASE', 'TABLE_NAME'), station_code, query))
-	   logger.debug('data during failure is\n\t%s' % (','.join(value_list)))
+	   logger.info('failed during %s insert for station %s\n%s' % (config.get('DATABASE', 'TABLE_NAME'), site_code, query))
+	   logger.debug('data during failure is\n\t%s"' % ('","'.join(value_list)))
 	   conn.rollback()
 	   raise
 
-	cursor.execute(count_query, [station_code])
+	cursor.execute(count_query, [site_code])
 	row = cursor.fetchone()
 	post_insert_row_count = row[0]
 	
 	query = 'update ' + config.get('DATABASE', 'STATION_TABLE_NAME') + ' SET LastRetrieval=%s, LastModified=%s ' + \
-				' WHERE station_code like %s'
+				' WHERE site_code like %s'
 	try:
-		cursor.execute(query, [LastRetrieval, LastModified, station_code])
+		cursor.execute(query, [LastRetrieval, LastModified, site_code])
 		conn.commit() 
 	except:
 	   logger.info('failed during %s update\n%s' % (config.get('DATABASE', 'STATION_TABLE_NAME'), query))

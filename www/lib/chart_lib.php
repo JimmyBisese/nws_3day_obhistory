@@ -44,21 +44,21 @@
 	}
 	error_reporting($error_reporting_setting);
 
-	// get the station_name
+	// get the site_name
 	$result = $db_connection->query("
-SELECT station_name as site_name, short_name as short_site_name
+SELECT site_name as site_name, short_name as short_site_name
 FROM stations
-WHERE station_code like '$site_code'
+WHERE site_code like '$site_code'
 ");
 	$row = $result->fetch_assoc();
 	$site_name = $row['site_name'];
 	$short_site_name = $row['short_site_name'];
 
-	// get the 'compare to' station_name
+	// get the 'compare to' site_name
 	$result = $db_connection->query("
-SELECT station_name as site_name, short_name as short_site_name
+SELECT site_name as site_name, short_name as short_site_name
 FROM stations
-WHERE station_code like '$site_codeB'
+WHERE site_code like '$site_codeB'
 ");
 	$row = $result->fetch_assoc();
 	$site_nameB = $row['site_name'];
@@ -77,25 +77,25 @@ WHERE station_code like '$site_codeB'
 	
 	// get the list of stations shown in the select list
 	$station_list_result = $db_connection->query("
-SELECT s.station_code as site_code,s.station_name as site_name
-FROM stations s left join weather_data on s.station_code = STATION
-GROUP BY s.station_code
+SELECT s.site_code,s.site_name as site_name
+FROM stations s left join weather_data d on s.site_code = d.site_code
+GROUP BY s.site_code
 ");
 	
 	// get the list of stations shown in the select list
 $station_list_resultB = $db_connection->query("
-SELECT s.station_code as site_code,s.station_name as site_name
-FROM stations s left join weather_data on s.station_code = STATION
-GROUP BY s.station_code
+SELECT s.site_code as site_code,s.site_name as site_name
+FROM stations s left join weather_data d on s.site_code = d.site_code
+GROUP BY s.site_code
 ");
 
 	// get the time-series data
 	$station_data = $db_connection->query("
-select (UNIX_TIMESTAMP(DateTime)- 7*60*60)   as date_seconds, AirTemp,AirPressureAltimeter
-from weather_data
-where STATION like '$site_code'
-  and DateTime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
-ORDER BY DateTime
+select (UNIX_TIMESTAMP(d.DateTime)- 7*60*60)   as date_seconds, d.AirTemp, d.AirPressureAltimeter
+from weather_data d
+where d.site_code like '$site_code'
+  and d.DateTime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+ORDER BY d.DateTime
 ");
 
 	$timeseriesA = array();
@@ -111,11 +111,11 @@ ORDER BY DateTime
 
 	// get the time-series data for the 'compare to' station
 	$station_dataB = $db_connection->query("
-select (UNIX_TIMESTAMP(DateTime)- 7*60*60)   as date_seconds, AirTemp, AirPressureAltimeter
-from weather_data
-where STATION like '$site_codeB'
- and DateTime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
-ORDER BY DateTime
+select (UNIX_TIMESTAMP(d.DateTime)- 7*60*60)   as date_seconds, d.AirTemp, d.AirPressureAltimeter
+from weather_data d
+where d.site_code like '$site_codeB'
+  and d.DateTime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+ORDER BY d.DateTime
 ");
 
 	$timeseriesB = array();
