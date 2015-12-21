@@ -14,10 +14,7 @@ body {
 	position:relative;
 	background-color: #005596;
 }
-#flash {
-	display: none; 
-	width: 60%;
-} 
+
 .header {
 	height: 40px;
 	font-family: 'Open Sans', Helvetica, Arial;
@@ -81,6 +78,22 @@ body {
 	bottom: 5px;
 	right: 5px;
 	left: 5px;
+}
+#MainDataTables {
+	display: none; 
+
+	position: absolute;
+	top: 70px;
+	bottom: 27px;
+	right: 5px;
+	left: 5px;
+	
+} 
+#WeatherTable {
+	font-size: 0.8em;
+}
+div.dataTables_length {
+    display: none;
 }
 .footer {
 	height: 22px;
