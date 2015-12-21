@@ -1,0 +1,16 @@
+
+The data for this application is stored in MySQL database.  The SQL part is simple, and could be switched with another database system, but both the python code and the 
+PHP use MySQL specific libraries that would need to be replaced.
+
+The steps to install this application are:<ol>
+<li>Create database using 'create' scripts
+<li>Copy scripts/lib/weather.conf.template to scripts/lib/weather.conf and edit to fit your system
+
+<li>Add 'stations' to the 'stations' table
+<li>Run 'nws_3day_scraper.py' python script to pull data
+<li>Optional: if you want to automate the data retrieval, put the 'run_nwis_3day_scraper.vbs' (or other version) in the Task Manager.  have it run every 1 hour.
+<li>Move the 'www' folder to a subfolder of inetpub/www, or other place on non-windows machine. You can also use the folder where it is using a 'Virtual Directory' in IIS
+<li>Copy www/lib/weather.conf.php.template to scripts/lib/weather.conf.php and edit to fit your system
+<li>Navigate to your new web application and make sure things are working.
+<li>Option: for production systems, change the error reporting to not display errors.
+</ol>
