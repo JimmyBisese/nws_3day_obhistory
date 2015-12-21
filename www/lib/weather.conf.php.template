@@ -1,0 +1,12 @@
+<?php
+
+return array(
+	'STATION_TABLE_NAME' => 'stations',
+	'TABLE_NAME'=> 'weather_data',
+	'HOST_NAME'=> '{hostname}',
+	'USER'=> '{username}',
+	'HOST'=> '{hostname}',
+	'PASSWD'=> '{password}',
+	'DB'=> 'weather',
+	'PORT'=> '{port}',
+);

@@ -1,0 +1,99 @@
+
+/*  
+	CSS for Tetra Tech Weather Application
+    Jimmy Bisese
+    
+*/
+
+html { height: 100%; }
+
+body {
+	height:100%;
+	min-height: 100%;
+	margin: 0px;
+	position:relative;
+	background-color: #005596;
+}
+#flash {
+	display: none; 
+	width: 60%;
+} 
+.header {
+	height: 40px;
+	font-family: 'Open Sans', Helvetica, Arial;
+	padding: 0px 0px;
+}
+.header img {
+	float: left;
+	padding: 5px 5px 5px 5px;
+	height: 30px;
+}
+.header h1 {
+	height: 100%;
+	color: white;
+	padding-left: 45px;
+	padding-top: 2px;
+}
+.make_radius_border {
+	background: white;
+	margin: 0 auto;
+	position: absolute;
+	top: 40px;
+	bottom: 22px;
+	right: 2px;
+	left: 2px;
+	border-radius: 20px;
+}
+.lfloat {
+	display: inline-block;
+	float: left;
+	padding-top: 10px;
+	padding-left: 60px;
+	padding-bottom: 10px;
+}
+.rfloat {
+	display: inline-block;
+	float: right;
+	padding-top: 10px;
+	padding-right: 60px;
+	padding-bottom: 10px;
+}
+.select_form {
+	background-color: white;
+	position: absolute;
+	top: 0px;
+	left: 20px;
+	right: 20px;
+	display: inline-block;
+	overflow: wrap;
+}
+.select_label {
+	font-family: 'Open Sans', Helvetica, Arial;
+	padding-bottom: 3;
+}
+.select_box {
+	height: 25px;
+}
+#HighChartContainer {
+	margin: 0 auto;
+	position: absolute;
+	top: 70px;
+	bottom: 5px;
+	right: 5px;
+	left: 5px;
+}
+.footer {
+	height: 22px;
+	padding: 0px 0px;
+	width:100%;
+	bottom:0px;
+	left:0px;
+	position:absolute;
+}
+.footer_text {
+	padding: 2px 15px;
+	font-family: 'Open Sans', Helvetica, Arial;
+	text-align: right;
+	text-size: 8px;
+	color: white;
+}
