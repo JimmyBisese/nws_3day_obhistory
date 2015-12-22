@@ -81,7 +81,7 @@ body {
 }
 #MainDataTables {
 	display: none; 
-
+		border-radius: 20px;
 	position: absolute;
 	top: 70px;
 	bottom: 27px;
@@ -91,10 +91,12 @@ body {
 } 
 #WeatherTable {
 	font-size: 0.8em;
+
 }
 div.dataTables_length {
     display: none;
 }
+
 .footer {
 	height: 22px;
 	padding: 0px 0px;

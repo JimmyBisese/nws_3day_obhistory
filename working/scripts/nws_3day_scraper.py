@@ -37,12 +37,10 @@ except:
 
 parser = ArgumentParser(description="""
 
-    Grabs weather data from NWS tables
+	Grabs weather data from NWS tables
 
 """)
-parser.add_argument('-s', '--station', help='station to get data from (ex. KANK, KMYP, KAEJ',
-				choices=['KANK', 'KAEJ', 'KPUB', 'KCOS', 'KLXV', 'KMYP', 'KDCA', 'KGUC', 'KATL'],
-				required=False)
+parser.add_argument('-s', '--station', help='station to get data from (ex. KANK, KMYP, KAEJ', required=False)
 parser.add_argument("-r", "--runall", action="store_true", help='process (run) all of stations')
 parser.add_argument("-l", "--logger", nargs='?', choices=["DEBUG","INFO","WARNING", "ERROR", "CRITICAL"], \
 					default=config.get('DEFAULTS', 'logger_default_level'), help='set the amount of messages to print to STDOUT')
@@ -59,7 +57,7 @@ def main():
 							db=config.get('DATABASE', 'DB'),
 							port=int(config.get('DATABASE', 'PORT')))
 	
-	query = 'SELECT site_code,site_name,LastRetrieval,LastModified from  ' + config.get('DATABASE', 'STATION_TABLE_NAME')
+	query = 'SELECT site_code, site_name, LastRetrieval, LastModified from  ' + config.get('DATABASE', 'STATION_TABLE_NAME')
 	
 	try:
 		cursor = conn.cursor(pymysql.cursors.DictCursor)
@@ -135,11 +133,11 @@ def get_data(site_code):
 
 	# Get table
 	try:
-	    tables = soup.findAll("table")
-	    table = tables[3]
+		tables = soup.findAll("table")
+		table = tables[3]
 	except AttributeError as e:
-	    logger.warn( 'No tables found, exiting' % (url, e.reason))  
-	    return 1
+		logger.warn( 'No tables found, exiting' % (url, e.reason))  
+		return 1
 	except LookupError as e:
 		logger.warn('there is no index table[3] on the page for ' + url)
 		return 1
@@ -202,7 +200,7 @@ def get_data(site_code):
 			if data[field] == 'NA':
 				data[field] = None
 			elif not data[field]:
-				data[field] = -99
+				data[field] = None
 
 		data_rows[data['TIMESTAMP']] = data
 

@@ -77,14 +77,14 @@ WHERE site_code like '$site_codeB'
 	
 	// get the list of stations shown in the select list
 	$station_list_result = $db_connection->query("
-SELECT s.site_code,s.site_name as site_name
+SELECT s.site_code,s.site_name
 FROM stations s left join weather_data d on s.site_code = d.site_code
 GROUP BY s.site_code
 ");
 	
 	// get the list of stations shown in the select list
 $station_list_resultB = $db_connection->query("
-SELECT s.site_code as site_code,s.site_name as site_name
+SELECT s.site_code,s.site_name
 FROM stations s left join weather_data d on s.site_code = d.site_code
 GROUP BY s.site_code
 ");
@@ -111,7 +111,7 @@ ORDER BY d.DateTime
 
 	// get the time-series data for the 'compare to' station
 	$station_dataB = $db_connection->query("
-select (UNIX_TIMESTAMP(d.DateTime)- 7*60*60)   as date_seconds, d.AirTemp, d.AirPressureAltimeter
+select (UNIX_TIMESTAMP(d.DateTime)- 7*60*60) as date_seconds, d.AirTemp, d.AirPressureAltimeter
 from weather_data d
 where d.site_code like '$site_codeB'
   and d.DateTime > DATE_SUB(CURDATE(), INTERVAL 3 MONTH)

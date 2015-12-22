@@ -153,9 +153,7 @@
 				labelStyle: {
 					color: 'silver',
 					fontWeight: 'bold',
-
-							fontFamily: "'Open Sans', Helvetica, Arial"
-
+					fontFamily: "'Open Sans', Helvetica, Arial"
 				},
 				selected: 1,
 				buttons: 
@@ -280,12 +278,12 @@
 				<div class="select_label"><?php echo $select_label; ?></div>
 				<select class="select_box" name="station" onchange="this.form.submit()" >
 				<?php 
-			    while ($row = $station_list_result->fetch_assoc())
-			    {
-			    	$selected = (isset($site_code) && $site_code ==  $row['site_code']) ? 'selected' : '';
-			    	echo "<option value='" . $row['site_code'] . "' $selected >" . $row['site_code'] . ' - ' .$row['site_name'] . "</option>";
-			    }
-			    ?>
+					while ($row = $station_list_result->fetch_assoc())
+					{
+						$selected = (isset($site_code) && $site_code ==  $row['site_code']) ? 'selected' : '';
+						echo "<option value='" . $row['site_code'] . "' $selected >" . $row['site_code'] . ' - ' .$row['site_name'] . "</option>";
+					}
+				?>
 				</select>
 				<input style="border-left: 20px;" type="button" 
 					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?site_code=<?php echo($site_code); ?>', '_table_target');" 
@@ -296,12 +294,12 @@
 				<div class="select_label"><?php echo $select_labelB; ?></div>
 				<select class="select_box" name="stationB" onchange="this.form.submit()"  >
 				<?php 
-			    while ($row = $station_list_resultB->fetch_assoc())
-			    {
-			    	$selected = (isset($site_codeB) && $site_codeB ==  $row['site_code']) ? 'selected' : '';
-			    	echo "<option value='" . $row['site_code'] . "' $selected >" . $row['site_code'] . ' - ' .$row['site_name'] . "</option>";
-			    }
-			    ?>
+					while ($row = $station_list_resultB->fetch_assoc())
+					{
+						$selected = (isset($site_codeB) && $site_codeB ==  $row['site_code']) ? 'selected' : '';
+						echo "<option value='" . $row['site_code'] . "' $selected >" . $row['site_code'] . ' - ' .$row['site_name'] . "</option>";
+					}
+				?>
 				</select>
 				<input style="border-left: 20px;" type="button" 
 					onclick="window.open('http://<?php echo $_SERVER['SERVER_NAME'] . $other_script_name ; ?>?site_code=<?php echo($site_codeB); ?>', '_table_target');" 
